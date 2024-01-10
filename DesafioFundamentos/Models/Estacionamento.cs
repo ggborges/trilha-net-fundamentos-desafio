@@ -39,7 +39,6 @@ namespace DesafioFundamentos.Models
                 veiculos.Remove(placaVeiculo);
 
                 Console.WriteLine($"O veículo {placaVeiculo} foi removido e o preço total foi de: R$ {valorTotal}");
-                Console.WriteLine(veiculos.Count);
             }
             else
             {
@@ -53,8 +52,11 @@ namespace DesafioFundamentos.Models
             if (veiculos.Any())
             {
                 Console.WriteLine("Os veículos estacionados são:");
-                // TODO: Realizar um laço de repetição, exibindo os veículos estacionados
-                // *IMPLEMENTE AQUI*
+
+                foreach (string veiculo in veiculos)
+                {
+                    Console.WriteLine(veiculo);
+                }
             }
             else
             {
