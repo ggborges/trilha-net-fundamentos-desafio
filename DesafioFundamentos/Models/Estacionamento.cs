@@ -26,6 +26,11 @@ namespace DesafioFundamentos.Models
                 for(int i = 0; i < partesDaPlaca.Length; i++)
                 {
                     string parte = partesDaPlaca[i];
+                    if ((i == 0 && parte.Length != 3) || (i == 1 && parte.Length != 4))
+                    {
+                        valida = false;
+                        break;
+                    }
                     foreach(char caracter in parte)
                     {
                         if(i == 0 && !char.IsLetter(caracter)) // Para i=0 => parte alfabética
@@ -51,10 +56,10 @@ namespace DesafioFundamentos.Models
         {
             Console.WriteLine("Digite a placa do veículo para estacionar:");
             string placaVeiculo = Console.ReadLine().ToUpper();
-            
+
             if(veiculos.Contains(placaVeiculo))
             {
-                Console.WriteLine("Carro já estacionado.");
+                Console.WriteLine("Carro já estacionado, tente outra placa.");
                 return;
             }
 
