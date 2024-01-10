@@ -14,11 +14,57 @@ namespace DesafioFundamentos.Models
             this.precoPorHora = precoPorHora;
         }
 
+        // Verificação de placa válida (AAA-0000)
+        public bool PlacaValida(string placa)
+        {
+            bool valida = true;
+            
+            if(placa.Contains('-') && placa.Length == 8)
+            {
+                // Divide entre a parte alfabética e parte numérica
+                string[] partesDaPlaca = placa.Split('-');
+                for(int i = 0; i < partesDaPlaca.Length; i++)
+                {
+                    string parte = partesDaPlaca[i];
+                    foreach(char caracter in parte)
+                    {
+                        if(i == 0 && !char.IsLetter(caracter)) // Para i=0 => parte alfabética
+                        {
+                            valida = false;
+                            break;
+                        } else if(i == 1 && !char.IsDigit(caracter)) // Para i=1 => parte numérica
+                        {
+                            valida = false;
+                            break;
+                        }
+                    }
+                }
+            } else
+            {
+                valida = false;
+            }
+
+            return valida;
+        }
+
         public void AdicionarVeiculo()
         {
             Console.WriteLine("Digite a placa do veículo para estacionar:");
-            string placaVeiculo = Console.ReadLine();
-            veiculos.Add(placaVeiculo);
+            string placaVeiculo = Console.ReadLine().ToUpper();
+            
+            if(veiculos.Contains(placaVeiculo))
+            {
+                Console.WriteLine("Carro já estacionado.");
+                return;
+            }
+
+            if(PlacaValida(placaVeiculo))
+            {
+                veiculos.Add(placaVeiculo);
+            } else
+            {
+                Console.WriteLine("Placa cadastrada não é uma placa válida.\n(Ex: AAA-0000)");
+            }
         }
 
         public void RemoverVeiculo()
@@ -26,7 +72,7 @@ namespace DesafioFundamentos.Models
             Console.WriteLine("Digite a placa do veículo para remover:");
 
             // Pedir para o usuário digitar a placa e armazenar na variável placa
-            string placaVeiculo = Console.ReadLine();
+            string placaVeiculo = Console.ReadLine().ToUpper();
 
             // Verifica se o veículo existe
             if (veiculos.Any(x => x.ToUpper() == placaVeiculo.ToUpper()))
@@ -55,7 +101,7 @@ namespace DesafioFundamentos.Models
 
                 foreach (string veiculo in veiculos)
                 {
-                    Console.WriteLine(veiculo);
+                    Console.WriteLine(veiculo.ToUpper());
                 }
             }
             else
